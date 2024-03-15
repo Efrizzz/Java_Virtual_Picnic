@@ -7,4 +7,3 @@ public interface WordCounter {
     String findLongestWord();
     HashMap<String, Integer> calculateWordFrequency();
 }
-

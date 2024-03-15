@@ -33,6 +33,7 @@ public class FileWordCounter implements WordCounter {
     @Override
     public String findLongestWord() {
         String longestWord = "";
+        HashMap<String, Integer> wordsOfMaxLength = new HashMap<>();
         try {
             File file = new File(fileName);
             try (Scanner scanner = new Scanner(file)) {
@@ -40,6 +41,10 @@ public class FileWordCounter implements WordCounter {
                     String word = scanner.next();
                     if (word.length() > longestWord.length()) {
                         longestWord = word;
+                        wordsOfMaxLength.clear();
+                        wordsOfMaxLength.put(longestWord, 1);
+                    } else if (word.length() == longestWord.length() && !wordsOfMaxLength.containsKey(word)) {
+                        wordsOfMaxLength.put(word, 1);
                     }
                 }
             }
@@ -47,7 +52,7 @@ public class FileWordCounter implements WordCounter {
             e.printStackTrace();
         }
 
-        return longestWord;
+        return String.join(", ", wordsOfMaxLength.keySet());
     }
 
     @Override
